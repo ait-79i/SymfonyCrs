@@ -16,7 +16,7 @@ class AppFixtures extends Fixture
   }
   public function load(ObjectManager $manager)
   {
-    for ($i = 0; $i < 20; $i++) {
+    for ($i = 0; $i < 101; $i++) {
       $ingedient = new Ingrediant;
       $ingedient
         ->setName($this->faker->word())

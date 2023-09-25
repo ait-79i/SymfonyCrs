@@ -5,8 +5,10 @@ namespace App\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\IngrediantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: IngrediantRepository::class)]
+#[UniqueEntity('name')]
 class Ingrediant
 {
     #[ORM\Id]
@@ -16,26 +18,26 @@ class Ingrediant
 
     #[ORM\Column(length: 55)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min:5,max:50)]
+    #[Assert\Length(min: 5, max: 50)]
     private ?string $name = null;
 
     #[ORM\Column]
     #[Assert\NotBlank()]
     #[Assert\Positive()]
-    #[Assert\LessThan()]
+    #[Assert\LessThan(200)]
     private ?int $price = null;
-    
+
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
-    
+
     /**
      * constructor
      * 
      */
     public function __construct()
     {
-        $this->createdAt=new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
