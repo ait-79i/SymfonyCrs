@@ -1,4 +1,13 @@
 {
   "editor.fontFamily": "Fira Code",
-  "editor.fontLigatures": true
+  "editor.fontLigatures": true,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.suggestSelection": "recentlyUsed",
+  "editor.wordBasedSuggestionsMode": "allDocuments",
+  "workbench.editor.wrapTabs": false,
+  "comments.openView": "never",
+  "cSpell.language": "fr-FR,fr",
+  "cSpell.enableFiletypes": [
+    "twig"
+  ]
 }

@@ -29,14 +29,13 @@ class IngredientController extends AbstractController
         // #region getData with pagination using knpPaginatorBundle
         $ings = $paginator->paginate(
             $repository->findAll(), /* query NOT result */
-            $request->query->getInt('page', 3), /*page number*/
-            10 /*limit per page*/
+            $request->query->getInt('page', 1), /*page number*/
+            13 /*limit per page*/
         );
         return $this->render('pages/ingredient/index.html.twig', ['ingredients' => $ings]);
         // #endregion
 
     }
-
 
     #[Route('ingredient/nouveau', name: 'ingredient.new', methods: ['GET', 'POST'])]
 
@@ -54,10 +53,37 @@ class IngredientController extends AbstractController
             $ingredient = $form->getData();
             $manager->persist($ingredient);
             $manager->flush();
-            $this->addFlash('success', 'dazt bikhir o 3la khiiir ');
+            $this->addFlash('success', ' Added Successfully ');
             return $this->redirectToRoute('ingredient.index');
         }
 
         return $this->render('pages/ingredient/new.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('ingredient/edit/{id}', 'ingredient.edit', methods: ['GET', 'POST'])]
+    public function edit(Ingrediant $ingredient, EntityManagerInterface $manager, Request $r): Response
+    {
+        $form = $this->createForm(IngredientType::class, $ingredient);
+        $form->handleRequest($r);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ingredient = $form->getData();
+            $manager->persist($ingredient);
+            $this->addFlash('success', 'Your ingredient updated successfully');
+            $manager->flush();
+
+            return $this->redirectToRoute('ingredient.index');
+        }
+
+        return $this->render('pages/ingredient/edit.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('ingredient/delete/{id}', 'ingredient.delete', methods: ['GET'])]
+    public function delete(EntityManagerInterface $manager, Ingrediant $ingredient,): Response
+    {
+        $manager->remove($ingredient);
+        $manager->flush();
+
+        $this->addFlash('success', 'ingredient removed successfully');
+        return $this->redirectToRoute('ingredient.index');
     }
 }

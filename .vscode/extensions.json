@@ -1,5 +1,6 @@
 {
   "recommendations": [
-    "neilbrayfield.php-docblocker"
+    "neilbrayfield.php-docblocker",
+    "aaron-bond.better-comments"
   ]
 }
